@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {Router} from "@angular/router";
+import { TasksModule } from './tasks/tasks.module';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,8 @@ import {Router} from "@angular/router";
   ],
   imports: [
     BrowserModule,
+    TasksModule,
+    //must be last
     AppRoutingModule
   ],
   providers: [],
