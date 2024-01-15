@@ -15,4 +15,8 @@ export class AppComponent {
   onDeactivate($event: any, routerOutlet: RouterOutlet): void {
     // console.log('Deactivated Component', $event, routerOutlet);
   }
+
+  onRouterLinkActive($event: boolean) {
+    console.log("Is about active: " + $event)
+  }
 }
