@@ -18,7 +18,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  // bindToComponentInputs is used to allow binding parthParam - taskId to @Input() taskId in task-form component
+  imports: [RouterModule.forRoot(routes, {useHash: false, bindToComponentInputs: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
