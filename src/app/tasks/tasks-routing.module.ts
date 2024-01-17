@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     // taskID - required pass parameter
-    path: 'edit/:taskId ',
+    path: 'edit/:taskId',
     component: TaskFormComponent
   }
 ];
