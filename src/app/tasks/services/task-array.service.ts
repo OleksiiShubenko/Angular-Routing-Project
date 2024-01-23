@@ -13,7 +13,6 @@ export class TaskArrayService {
 
   getTasks(): Promise<TaskModel[]> {
     return Promise.resolve(this.taskList);
-    ;
   }
 
   getTask(id: NonNullable<TaskModel['id']> | string): Promise<TaskModel | undefined> {

@@ -5,11 +5,12 @@ import {TaskFormComponent, TaskListComponent} from "./components";
 const routes: Routes = [
   {
     // path: 'task-list',
+    //TaskListComponent will be put to <router-outlet> tag on html
     path: 'home',
     component: TaskListComponent
   },
   {
-    // taskID - required pass parameter
+    // taskId - required pass parameter
     path: 'edit/:taskId',
     component: TaskFormComponent
   }

@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import {Route, RouterModule, Routes, UrlMatchResult, UrlSegment, UrlSegmentGroup} from '@angular/router';
-import { AboutComponent, AbcComponent, HomeComponent, PathNotFoundComponent } from './pages'
+import { AboutComponent, AbcComponent, HomeComponent, PathNotFoundComponent, MessagesComponent } from './pages'
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  {
+    path: 'messagesPath',
+    component: MessagesComponent,
+    outlet: 'messagesOutletName'
+  },
   { path: 'about', component: AboutComponent },
   {
     component: AbcComponent,
