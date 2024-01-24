@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {Router} from "@angular/router";
 import { TasksModule } from './tasks/tasks.module';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { TasksModule } from './tasks/tasks.module';
   imports: [
     BrowserModule,
     TasksModule,
+    UsersModule,
     //must be last
     AppRoutingModule
   ],
