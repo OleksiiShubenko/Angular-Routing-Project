@@ -13,7 +13,7 @@ const routes: Routes = [
         component: UserFormComponent
       },
       {
-        path: 'edit/:userID',
+        path: 'edit/:userId',
         component: UserFormComponent,
       },
       {

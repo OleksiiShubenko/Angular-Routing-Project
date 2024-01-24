@@ -1,5 +1,5 @@
 import {Component, type OnInit, inject, DestroyRef} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {UserModel} from './../../models/user.model';
 import {UserArrayService} from './../../services/user-array.service';
@@ -15,11 +15,12 @@ export class UserFormComponent implements OnInit {
   private userArrayService = inject(UserArrayService);
   private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.user = new UserModel(null, '', '');
 // we should recreate component because this code runs only once
-    const id = this.route.snapshot.paramMap.get('userID')!;
+    const id = this.route.snapshot.paramMap.get('userId')!;
     const observer = {
       next: (user: UserModel) => {
         this.user = {...user};
@@ -39,8 +40,11 @@ export class UserFormComponent implements OnInit {
     const user = {...this.user};
     const method = user.id ? 'updateUser' : 'createUser';
     this.userArrayService[method](user);
+    this.onGoBack();
   }
 
   onGoBack(): void {
+    // relatively go to the users-list (/users)
+    this.router.navigate(['./../../'], {relativeTo: this.route})
   }
 }

@@ -1,4 +1,4 @@
-import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy, Output, EventEmitter} from '@angular/core';
 import type {UserModel} from './../../models/user.model';
 import {CommonModule} from '@angular/common';
 
@@ -12,8 +12,9 @@ import {CommonModule} from '@angular/common';
 })
 export class UserComponent {
   @Input({required: true}) user!: UserModel;
+  @Output() editUser = new EventEmitter<UserModel>();
 
   onEditUser(): void {
-
+    this.editUser.emit(this.user);
   }
 }
