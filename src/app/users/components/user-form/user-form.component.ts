@@ -40,7 +40,11 @@ export class UserFormComponent implements OnInit {
     const user = {...this.user};
     const method = user.id ? 'updateUser' : 'createUser';
     this.userArrayService[method](user);
-    this.onGoBack();
+    if (user.id) {
+      this.router.navigate(['/users', {editedUserId: user.id}])
+    } else {
+      this.onGoBack();
+    }
   }
 
   onGoBack(): void {
