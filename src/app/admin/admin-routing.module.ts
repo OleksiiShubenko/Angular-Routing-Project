@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, type Routes} from '@angular/router';
 import {AdminDashboardComponent, ManageTasksComponent, ManageUsersComponent} from "./components";
 import {AdminComponent} from "./admin.component";
-import {canActivateAuthGuard} from "../core";
+import {canActivateAuthGuard, canActivateChildAuthGuard} from "../core";
 
 const routes: Routes = [
   {
@@ -12,6 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        canActivateChild: [canActivateChildAuthGuard],
         children: [
           {path: 'users', component: ManageUsersComponent},
           {path: 'tasks', component: ManageTasksComponent},
