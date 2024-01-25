@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {Route, RouterModule, Routes, UrlMatchResult, UrlSegment, UrlSegmentGroup} from '@angular/router';
-import { AboutComponent, AbcComponent, HomeComponent, PathNotFoundComponent, MessagesComponent } from './pages'
+import {AbcComponent, AboutComponent, LoginComponent, MessagesComponent, PathNotFoundComponent} from './pages'
 
 const routes: Routes = [
   {
@@ -8,7 +8,7 @@ const routes: Routes = [
     component: MessagesComponent,
     outlet: 'messagesOutletName'
   },
-  { path: 'about', component: AboutComponent },
+  {path: 'about', component: AboutComponent},
   {
     component: AbcComponent,
     matcher: (url: UrlSegment[], group: UrlSegmentGroup, route: Route): UrlMatchResult | null => {
@@ -17,8 +17,9 @@ const routes: Routes = [
       return url.length === 1 && url[0].path.includes('abc') ? ({consumed: url}) : null;
     }
   },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', component: PathNotFoundComponent }
+  {path: '', redirectTo: '/home', pathMatch: 'full'},
+  {path: 'login', component: LoginComponent},
+  {path: '**', component: PathNotFoundComponent}
 ];
 
 @NgModule({
@@ -26,4 +27,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, {useHash: false, bindToComponentInputs: true})],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
