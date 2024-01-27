@@ -1,9 +1,10 @@
 import {Component, type OnInit, inject, DestroyRef} from '@angular/core';
-import {ActivatedRoute, Router, UrlTree} from '@angular/router';
+import {ActivatedRoute, Data, Router, UrlTree} from '@angular/router';
 import {Observable, Subscription} from 'rxjs';
 import {UserModel} from './../../models/user.model';
 import {UserArrayService} from './../../services/user-array.service';
 import {CanComponentDeactivate, DialogService} from "../../../core";
+import {Input} from "@angular/core";
 
 @Component({
   templateUrl: './user-form.component.html',
@@ -12,33 +13,33 @@ import {CanComponentDeactivate, DialogService} from "../../../core";
 export class UserFormComponent implements OnInit, CanComponentDeactivate {
   user!: UserModel;
   originalUser!: UserModel;
-  private sub!: Subscription;
   private userArrayService = inject(UserArrayService);
   private route = inject(ActivatedRoute);
-  private destroyRef = inject(DestroyRef);
   private router = inject(Router);
 
   //will be used to specify is Back button clicked
   private onGoBackClick: boolean = false;
   private dialogService = inject(DialogService);
 
+  // №1
+  // these resolver data are injected
+  // @Input({ required: true }) userFromResolver: UserModel = new UserModel(null, '', '');
+//    // this.user = {...this.userFromResolver}
+//     // this.originalUser = {...this.userFromResolver}
+
+
   ngOnInit(): void {
-    this.user = new UserModel(null, '', '');
-// we should recreate component because this code runs only once
-    const id = this.route.snapshot.paramMap.get('userId')!;
-    const observer = {
-      next: (user: UserModel) => {
-        this.user = {...user};
-        this.originalUser = {...user};
-      },
-      error: (err: any) => console.log(err)
-    };
-    this.sub = this.userArrayService.getUser(id).subscribe(observer);
-// OnDestroy
-    this.destroyRef.onDestroy(() => {
-      console.log('OnDestroy hook of UserForm via DestroyRef');
-      this.sub.unsubscribe();
-    });
+    // №2
+    // const userFromResolver = this.route.snapshot.data['userFromResolver'];
+    // this.user = {...userFromResolver}
+    // this.originalUser = {...userFromResolver}
+
+    // №3
+    this.route.data.subscribe((data: Data) => {
+      const userFromResolver = data['userFromResolver'];
+      this.user = {...userFromResolver}
+      this.originalUser = {...userFromResolver}
+    })
   }
 
   onSaveUser(): void {
