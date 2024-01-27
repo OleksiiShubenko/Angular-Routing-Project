@@ -1,6 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {Router, RouterOutlet} from "@angular/router";
 import {MessagesService} from "./core/services/messages.service";
+import {SpinnerService} from "./widgets";
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ export class AppComponent {
 
   private router = inject(Router)
   messagesService = inject(MessagesService)
+  spinnerService = inject(SpinnerService)
 
   onActivate($event: any, routerOutlet: RouterOutlet): void {
     // console.log('Activated Component', $event, routerOutlet);
