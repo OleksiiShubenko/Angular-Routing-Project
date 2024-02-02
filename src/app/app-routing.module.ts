@@ -1,5 +1,14 @@
 import {NgModule} from '@angular/core';
-import {Route, RouterModule, Routes, UrlMatchResult, UrlSegment, UrlSegmentGroup} from '@angular/router';
+import {
+  ExtraOptions,
+  PreloadAllModules,
+  Route,
+  RouterModule,
+  Routes,
+  UrlMatchResult,
+  UrlSegment,
+  UrlSegmentGroup
+} from '@angular/router';
 import {AbcComponent, AboutComponent, LoginComponent, MessagesComponent, PathNotFoundComponent} from './pages'
 import {canMatchAuthGuard} from "./core";
 
@@ -37,9 +46,16 @@ const routes: Routes = [
   {path: '**', component: PathNotFoundComponent}
 ];
 
+const extraOptions: ExtraOptions = {
+  preloadingStrategy: PreloadAllModules,
+  // bindToComponentInputs is used to allow binding pathParam - taskId to @Input() taskId in task-form component
+  bindToComponentInputs: true,
+  useHash: false,
+  enableTracing: true // Makes the router log all its internal events to the console.
+};
+
 @NgModule({
-  // bindToComponentInputs is used to allow binding parthParam - taskId to @Input() taskId in task-form component
-  imports: [RouterModule.forRoot(routes, {useHash: false, bindToComponentInputs: true})],
+  imports: [RouterModule.forRoot(routes, extraOptions)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
