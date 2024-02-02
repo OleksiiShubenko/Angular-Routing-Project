@@ -10,7 +10,7 @@ import {
   UrlSegmentGroup
 } from '@angular/router';
 import {AbcComponent, AboutComponent, LoginComponent, MessagesComponent, PathNotFoundComponent} from './pages'
-import {canMatchAuthGuard} from "./core";
+import {canMatchAuthGuard, CustomPreloadingStrategyService} from "./core";
 
 const routes: Routes = [
   {
@@ -21,6 +21,10 @@ const routes: Routes = [
   {
     path: 'admin',
     canMatch: [canMatchAuthGuard],
+    data: {
+      //will be used in CustomPreloadingStrategyService
+      myCustomPreload: false
+    },
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
   {
@@ -30,6 +34,9 @@ const routes: Routes = [
   },
   {
     path: 'users',
+    data: {
+      myCustomPreload: true
+    },
     loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
   },
   {path: 'about', component: AboutComponent},
@@ -47,7 +54,7 @@ const routes: Routes = [
 ];
 
 const extraOptions: ExtraOptions = {
-  preloadingStrategy: PreloadAllModules,
+  preloadingStrategy: CustomPreloadingStrategyService,
   // bindToComponentInputs is used to allow binding pathParam - taskId to @Input() taskId in task-form component
   bindToComponentInputs: true,
   useHash: false,
