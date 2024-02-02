@@ -8,6 +8,7 @@ import { TasksModule } from './tasks/tasks.module';
 import { UsersModule } from './users/users.module';
 import { AdminModule } from './admin/admin.module';
 import {SpinnerComponent} from "./widgets";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import {SpinnerComponent} from "./widgets";
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     TasksModule,
     UsersModule,
     AdminModule,

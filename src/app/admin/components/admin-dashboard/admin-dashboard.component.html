@@ -1,1 +1,4 @@
-<p>admin-dashboard works!</p>
+<p>Session ID: {{ sessionId }}</p>
+<a id="anchor"></a>
+<!-- async there is needed to convert token Observable to value -->
+<p>Token: {{ token | async }}</p>
