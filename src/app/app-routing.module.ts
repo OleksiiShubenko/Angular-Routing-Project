@@ -8,6 +8,14 @@ const routes: Routes = [
     component: MessagesComponent,
     outlet: 'messagesOutletName'
   },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+  },
+  {
+    path: 'users',
+    loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
+  },
   {path: 'about', component: AboutComponent},
   {
     component: AbcComponent,

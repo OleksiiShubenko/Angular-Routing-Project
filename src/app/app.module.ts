@@ -1,12 +1,10 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 import {Router} from "@angular/router";
-import { TasksModule } from './tasks/tasks.module';
-import { UsersModule } from './users/users.module';
-import { AdminModule } from './admin/admin.module';
+import {TasksModule} from './tasks/tasks.module';
 import {SpinnerComponent} from "./widgets";
 import {FormsModule} from "@angular/forms";
 
@@ -18,8 +16,10 @@ import {FormsModule} from "@angular/forms";
     BrowserModule,
     FormsModule,
     TasksModule,
-    UsersModule,
-    AdminModule,
+
+    // UsersModule,
+    // AdminModule,
+
     //must be last
     AppRoutingModule,
 
