@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule, Routes, UrlMatchResult, UrlSegment, UrlSegmentGroup} from '@angular/router';
 import {AbcComponent, AboutComponent, LoginComponent, MessagesComponent, PathNotFoundComponent} from './pages'
+import {canMatchAuthGuard} from "./core";
 
 const routes: Routes = [
   {
@@ -10,7 +11,13 @@ const routes: Routes = [
   },
   {
     path: 'admin',
+    canMatch: [canMatchAuthGuard],
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+  },
+  {
+    path: 'admin',
+    redirectTo: '/login',
+    pathMatch: 'full'
   },
   {
     path: 'users',
