@@ -3,10 +3,11 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {Router} from "@angular/router";
+import {Router, TitleStrategy} from "@angular/router";
 import {TasksModule} from './tasks/tasks.module';
 import {SpinnerComponent} from "./widgets";
 import {FormsModule} from "@angular/forms";
+import {PageTitleStrategy} from "./core/services/page-title-strategy.service";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import {FormsModule} from "@angular/forms";
 
     SpinnerComponent
   ],
-  providers: [],
+  providers: [ { provide: TitleStrategy, useClass: PageTitleStrategy } ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
