@@ -7,7 +7,7 @@ import {Router, TitleStrategy} from "@angular/router";
 import {TasksModule} from './tasks/tasks.module';
 import {SpinnerComponent} from "./widgets";
 import {FormsModule} from "@angular/forms";
-import {PageTitleStrategy} from "./core/services/page-title-strategy.service";
+import {PageTitleStrategy} from "./core";
 
 @NgModule({
   declarations: [

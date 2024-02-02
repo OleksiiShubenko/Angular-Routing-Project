@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {UsersComponent} from "./users.component";
 import {UserFormComponent, UserListComponent} from './components';
 import {canDeactivateGuard} from "../core";
-import {userResolver} from "./resolvers";
+import {editUserPageTitleResolver, userResolver} from "./resolvers";
 
 const routes: Routes = [
   {
@@ -18,6 +18,7 @@ const routes: Routes = [
       {
         path: 'edit/:userId',
         canDeactivate: [canDeactivateGuard],
+        title: editUserPageTitleResolver,
         resolve: {
           userFromResolver: userResolver
         },
