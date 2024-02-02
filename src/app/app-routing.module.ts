@@ -1,14 +1,5 @@
 import {NgModule} from '@angular/core';
-import {
-  ExtraOptions,
-  PreloadAllModules,
-  Route,
-  RouterModule,
-  Routes,
-  UrlMatchResult,
-  UrlSegment,
-  UrlSegmentGroup
-} from '@angular/router';
+import {ExtraOptions, Route, RouterModule, Routes, UrlMatchResult, UrlSegment, UrlSegmentGroup} from '@angular/router';
 import {AbcComponent, AboutComponent, LoginComponent, MessagesComponent, PathNotFoundComponent} from './pages'
 import {canMatchAuthGuard, CustomPreloadingStrategyService} from "./core";
 
@@ -25,7 +16,8 @@ const routes: Routes = [
       //will be used in CustomPreloadingStrategyService
       myCustomPreload: false
     },
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+    title: 'Admin'
   },
   {
     path: 'admin',
@@ -37,9 +29,14 @@ const routes: Routes = [
     data: {
       myCustomPreload: true
     },
-    loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
+    loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
+    title: 'Users'
   },
-  {path: 'about', component: AboutComponent},
+  {
+    path: 'about',
+    component: AboutComponent,
+    title: 'About'
+  },
   {
     component: AbcComponent,
     matcher: (url: UrlSegment[], group: UrlSegmentGroup, route: Route): UrlMatchResult | null => {
@@ -49,8 +46,16 @@ const routes: Routes = [
     }
   },
   {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'login', component: LoginComponent},
-  {path: '**', component: PathNotFoundComponent}
+  {
+    path: 'login',
+    component: LoginComponent,
+    title: 'Login'
+  },
+  {
+    path: '**',
+    component: PathNotFoundComponent,
+    title: 'Page Not Found'
+  }
 ];
 
 const extraOptions: ExtraOptions = {

@@ -1,24 +1,42 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {Router, RouterOutlet} from "@angular/router";
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
+import {NavigationStart, Router, RouterOutlet, Event} from "@angular/router";
 import {MessagesService} from "./core/services/messages.service";
 import {SpinnerService} from "./widgets";
 import {CustomPreloadingStrategyService} from "./core";
+import {filter, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
-  private preloadingStrategy = inject(CustomPreloadingStrategyService);
+export class AppComponent implements OnInit, OnDestroy {
+
   title = 'angular-routing-project';
 
-  private router = inject(Router)
   messagesService = inject(MessagesService)
   spinnerService = inject(SpinnerService)
 
+  private router = inject(Router)
+  private preloadingStrategy = inject(CustomPreloadingStrategyService);
+  private sub: { [key: string]: Subscription } = {};
+
   ngOnInit(): void {
     console.log(`Preloading Modules: `, this.preloadingStrategy.preloadedModules);
+    this.setMessageServiceOnRefresh();
+  }
+
+  private setMessageServiceOnRefresh(): void {
+    this.sub['navigationStart'] = this.router.events
+      .pipe(filter((event: Event) => event instanceof NavigationStart))
+      .subscribe((event: Event) => {
+        // returns true if url contains 'messagesOutletName:'
+        this.messagesService.isDisplayed = (event as NavigationStart).url.includes('messagesOutletName:');
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.sub['navigationStart'].unsubscribe();
   }
 
   onActivate($event: any, routerOutlet: RouterOutlet): void {

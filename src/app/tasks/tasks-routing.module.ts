@@ -7,7 +7,8 @@ const routes: Routes = [
     // path: 'task-list',
     //TaskListComponent will be put to <router-outlet> tag on html
     path: 'home',
-    component: TaskListComponent
+    component: TaskListComponent,
+    title: 'Home'
   },
   {
     // taskId - required pass parameter
