@@ -4,6 +4,7 @@ import {MessagesService} from "./core/services/messages.service";
 import {SpinnerService} from "./widgets";
 import {CustomPreloadingStrategyService} from "./core";
 import {filter, Subscription} from "rxjs";
+import {Meta} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,8 @@ export class AppComponent implements OnInit, OnDestroy {
   private router = inject(Router)
   private preloadingStrategy = inject(CustomPreloadingStrategyService);
   private sub: { [key: string]: Subscription } = {};
+
+  private metaService = inject(Meta);
 
   ngOnInit(): void {
     console.log(`Preloading Modules: `, this.preloadingStrategy.preloadedModules);
@@ -41,6 +44,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onActivate($event: any, routerOutlet: RouterOutlet): void {
     // console.log('Activated Component', $event, routerOutlet);
+    this.metaService.addTags(routerOutlet.activatedRouteData['myMeta']);
   }
 
   onDeactivate($event: any, routerOutlet: RouterOutlet): void {
