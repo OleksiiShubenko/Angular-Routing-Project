@@ -8,6 +8,7 @@ import {TasksModule} from './tasks/tasks.module';
 import {SpinnerComponent} from "./widgets";
 import {FormsModule} from "@angular/forms";
 import {PageTitleStrategy} from "./core";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {PageTitleStrategy} from "./core";
     // UsersModule,
     // AdminModule,
 
+    HttpClientModule,
     //must be last
     AppRoutingModule,
 
