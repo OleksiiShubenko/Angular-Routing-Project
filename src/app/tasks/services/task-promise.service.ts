@@ -19,6 +19,15 @@ export class TaskPromiseService {
       .catch(this.handleError);
   }
 
+  getTask(id: NonNullable<TaskModel['id']> | string): Promise<TaskModel> {
+    const url = `${this.tasksUrl}/${id}`;
+
+    const request$ = this.http.get(url);
+    return firstValueFrom(request$)
+      .then(response => response as TaskModel)
+      .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);

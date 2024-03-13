@@ -1,19 +1,21 @@
 import {Component, inject, type OnInit} from '@angular/core';
-import {TaskModel} from './../../models/task.model';
-import {TaskArrayService} from './../../services/task-array.service';
+import {TaskModel} from '../../models/task.model';
+import {TaskArrayService} from '../../services';
 import {Input} from "@angular/core";
 import {Router} from "@angular/router";
+import {TaskPromiseService} from "../../services";
 
 @Component({
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css']
 })
 export class TaskFormComponent implements OnInit {
-  @Input({ alias: 'taskId'})
+  @Input({alias: 'taskId'})
   id!: string; // pathParam
 
   task!: TaskModel;
   private taskArrayService = inject(TaskArrayService);
+  private taskPromiseService = inject(TaskPromiseService);
 
   private router = inject(Router)
 
@@ -21,7 +23,7 @@ export class TaskFormComponent implements OnInit {
     // create empty task to show at least empty form
     this.task = new TaskModel();
 
-    this.taskArrayService.getTask(this.id)
+    this.taskPromiseService.getTask(this.id)
       .then(task => {
         this.task = task ?? {} as TaskModel
       })
