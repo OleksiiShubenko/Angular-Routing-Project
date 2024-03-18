@@ -1,8 +1,7 @@
 import {Component, inject, type OnInit} from '@angular/core';
-import {TaskArrayService} from '../../services';
+import {TaskArrayService, TaskPromiseService} from '../../services';
 import type {TaskModel} from '../../models/task.model';
 import {Router} from "@angular/router";
-import {TaskPromiseService} from "../../services";
 
 @Component({
   selector: 'app-task-list',
@@ -13,7 +12,6 @@ import {TaskPromiseService} from "../../services";
 export class TaskListComponent implements OnInit {
   tasks!: Promise<Array<TaskModel>>;
 
-  private taskArrayService = inject(TaskArrayService);
   private taskPromiseService = inject(TaskPromiseService);
 
   private router = inject(Router)
@@ -46,5 +44,11 @@ export class TaskListComponent implements OnInit {
     const tasks: TaskModel[] = await this.tasks;
     const index = tasks.findIndex(t => t.id === updatedTask.id);
     tasks[index] = {...updatedTask};
+  }
+
+  onDeleteTask(task: TaskModel): void {
+    this.taskPromiseService.deleteTask(task)
+      .then(() => (this.tasks = this.taskPromiseService.getTasks()))
+      .catch(err => console.log(err));
   }
 }

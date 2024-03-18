@@ -22,9 +22,9 @@ export class TaskPromiseService {
   getTask(id: NonNullable<TaskModel['id']> | string): Promise<TaskModel> {
     const url = `${this.tasksUrl}/${id}`;
 
-    const request$ = this.http.get(url);
+    const request$ = this.http.get<TaskModel>(url);
     return firstValueFrom(request$)
-      .then(response => response as TaskModel)
+      .then(response => response)
       .catch(this.handleError);
   }
 
@@ -62,6 +62,15 @@ export class TaskPromiseService {
     const request$ = this.http.put(url, task, options);
     return firstValueFrom(request$)
       .then(response => response as TaskModel)
+      .catch(this.handleError);
+  }
+
+  deleteTask(task: TaskModel): Promise<unknown> {
+    const url = `${this.tasksUrl}/${task.id}`;
+    const request$ = this.http.delete(url);
+    return firstValueFrom(request$)
+      // json-server return empty object
+      // so we don't use .then(...)
       .catch(this.handleError);
   }
 
