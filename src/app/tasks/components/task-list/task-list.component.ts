@@ -25,12 +25,21 @@ export class TaskListComponent implements OnInit {
 
   onCompleteTask(task: TaskModel): void {
     const updatedTask = {...task, done: true};
-    this.taskArrayService.updateTask(updatedTask);
+    this.updateTask(updatedTask)
+      .catch(err => console.log(err));
   }
 
   // navigation to edit form
   onEditTask(task: TaskModel): void {
     const link = ['/edit', task.id]
     this.router.navigate(link)
+  }
+
+  private async updateTask(task: TaskModel) {
+    const updatedTask = await this.taskPromiseService.updateTask({...task, done: true})
+
+    const tasks: TaskModel[] = await this.tasks;
+    const index = tasks.findIndex(t => t.id === updatedTask.id);
+    tasks[index] = { ...updatedTask };
   }
 }

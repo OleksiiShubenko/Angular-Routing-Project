@@ -1,9 +1,8 @@
 import {Component, inject, type OnInit} from '@angular/core';
 import {TaskModel} from '../../models/task.model';
-import {TaskArrayService} from '../../services';
+import {TaskArrayService, TaskPromiseService} from '../../services';
 import {Input} from "@angular/core";
 import {Router} from "@angular/router";
-import {TaskPromiseService} from "../../services";
 
 @Component({
   templateUrl: './task-form.component.html',
@@ -33,11 +32,12 @@ export class TaskFormComponent implements OnInit {
   onSaveTask(): void {
     const task = {...this.task} as TaskModel;
     if (task.id) {
-      this.taskArrayService.updateTask(task);
+      this.taskPromiseService.updateTask(task)
+        .then(() => this.onGoBack());
     } else {
       this.taskArrayService.createTask(task);
+      this.onGoBack()
     }
-    this.onGoBack();
   }
 
   onGoBack(): void {
