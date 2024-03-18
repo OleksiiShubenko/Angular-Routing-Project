@@ -28,10 +28,36 @@ export class TaskPromiseService {
       .catch(this.handleError);
   }
 
+  async createTask(task$: TaskModel): Promise<TaskModel> {
+    const url = this.tasksUrl;
+    const options = {
+      headers: new HttpHeaders().append('Content-Type', 'application/json')
+    };
+
+    const id = await this.generateId();
+
+    let task = {...task$, id: id}
+
+    const request$ = this.http.post(url, task, options);
+    return firstValueFrom(request$)
+      .then(response => response as TaskModel)
+      .catch(this.handleError);
+  }
+
+  private async generateId(): Promise<number> {
+    return this.getTasks()
+      .then(tasks => {
+        if (tasks.length == 0) {
+          return 1;
+        }
+        return 1 + Number(tasks[tasks.length - 1].id!!);
+      })
+  }
+
   updateTask(task: TaskModel): Promise<TaskModel> {
     const url = `${this.tasksUrl}/${task.id}`;
     const options = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
     const request$ = this.http.put(url, task, options);
     return firstValueFrom(request$)

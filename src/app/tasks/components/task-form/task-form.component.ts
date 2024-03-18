@@ -1,6 +1,6 @@
 import {Component, inject, type OnInit} from '@angular/core';
 import {TaskModel} from '../../models/task.model';
-import {TaskArrayService, TaskPromiseService} from '../../services';
+import {TaskPromiseService} from '../../services';
 import {Input} from "@angular/core";
 import {Router} from "@angular/router";
 
@@ -10,10 +10,9 @@ import {Router} from "@angular/router";
 })
 export class TaskFormComponent implements OnInit {
   @Input({alias: 'taskId'})
-  id!: string; // pathParam
+  id!: string | undefined; // pathParam
 
   task!: TaskModel;
-  private taskArrayService = inject(TaskArrayService);
   private taskPromiseService = inject(TaskPromiseService);
 
   private router = inject(Router)
@@ -22,22 +21,25 @@ export class TaskFormComponent implements OnInit {
     // create empty task to show at least empty form
     this.task = new TaskModel();
 
-    this.taskPromiseService.getTask(this.id)
-      .then(task => {
-        this.task = task ?? {} as TaskModel
-      })
-      .catch(err => console.log(err))
+    if (this.id) {
+      this.taskPromiseService
+        .getTask(this.id)
+        .then((task) => {
+          this.task = task ?? ({} as TaskModel);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      this.task = new TaskModel();
+    }
   }
 
   onSaveTask(): void {
     const task = {...this.task} as TaskModel;
-    if (task.id) {
-      this.taskPromiseService.updateTask(task)
-        .then(() => this.onGoBack());
-    } else {
-      this.taskArrayService.createTask(task);
-      this.onGoBack()
-    }
+
+    const method = task.id ? 'updateTask' : 'createTask';
+    this.taskPromiseService[method](task)
+      .then(() => this.onGoBack())
+      .catch(err => console.log(err));
   }
 
   onGoBack(): void {

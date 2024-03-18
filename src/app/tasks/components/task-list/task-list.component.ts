@@ -29,6 +29,11 @@ export class TaskListComponent implements OnInit {
       .catch(err => console.log(err));
   }
 
+  onCreateTask(): void {
+    const link = ['/add'];
+    this.router.navigate(link);
+  }
+
   // navigation to edit form
   onEditTask(task: TaskModel): void {
     const link = ['/edit', task.id]
@@ -40,6 +45,6 @@ export class TaskListComponent implements OnInit {
 
     const tasks: TaskModel[] = await this.tasks;
     const index = tasks.findIndex(t => t.id === updatedTask.id);
-    tasks[index] = { ...updatedTask };
+    tasks[index] = {...updatedTask};
   }
 }

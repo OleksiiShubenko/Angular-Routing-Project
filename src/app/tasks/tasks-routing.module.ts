@@ -29,6 +29,10 @@ const routes: Routes = [
     // taskId - required pass parameter
     path: 'edit/:taskId',
     component: TaskFormComponent
+  },
+  {
+    path: 'add',
+    component: TaskFormComponent
   }
 ];
 
